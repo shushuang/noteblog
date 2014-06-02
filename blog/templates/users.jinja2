@@ -1,0 +1,13 @@
+﻿{% extends "template.html" %}
+{% block body %}
+    <div class = "container">
+      <div class="row">
+        <div class="col-md-9" role = "main">
+			{% for user in users %}
+				User:{{user.name}}<br/>
+				Pwd:{{user.pwd}}<br/>
+			{% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "template.html" %}
+{% block head %}
+	<link href="../static/css/validate.css" rel="stylesheet">
+	<script src="../static/js/validate.js"></script>
+	<script>
+		$(document).ready(function(){	
+			//check whether the username is valid	
+			$("#id_name").blur(function(){
+				val = $('#id_name').val()
+				if(!validate_required(val))
+				{
+					$(this).after(
+						'<div id="namevalid" class="error">用户名不能为空</div>');
+				}
+				else if(!validate_alphanumber(val))
+				{
+					$(this).after(
+						'<div id="namevalid" class="error">用户名只能包含字母和数字</div>');
+				}
+				else
+				{
+					  $.post("validname",
+					  {
+					    name: $('#id_name').val()
+					  },
+					  function(data,status){
+					   $('#namevalid').remove()
+					   if(data.valid == 'no')
+					   {
+					   	$('#id_name').after(
+					   	'<div id="namevalid" class="error">该用户名已经存在</div>')
+					   }
+					   else
+					   {
+					   	$('#id_name').after(
+					   	'<div id="namevalid" class="ok">可以使用</div>')
+					   }
+					  });
+				}
+			});
+			$('#id_email').blur(function(){
+				val_email = $(this).val();
+				$('#emailvalid').remove();
+				if(!validate_required(val_email))
+				{
+					$(this).after(
+							'<div id="emailvalid" class="error">邮箱不能为空</div>');
+				}
+				else if(!validate_email(val_email))
+				{
+					$(this).after(
+							'<div id="emailvalid" class="error">邮箱格式不正确</div>');
+				}
+				else
+				{
+					$(this).after(
+							'<div id="emailvalid" class="ok">正确</div>');
+				}
+			});
+			$('#id_pwd').blur(function(){
+				val = $(this).val();
+				$('#pwdvalid').remove();
+				if(!validate_required(val))
+				{
+					$(this).after(
+						'<div id="pwdvalid" class="error">密码不能为空</div>')
+				}
+				else if(!validate_alphanum(val))
+				{
+					$(this).after(
+						'<div id="pwdvalid" class="error">密码只能使用字母和数字</div>')
+				}
+				else
+				{
+					$(this).after(
+						'<div id="pwdvalid" class="ok">可以使用</div>');
+				}
+			});
+			$('#id_confirm').blur(function(){
+				val = $(this).val();
+				pwdval = $('#id_pwd').val();
+				$('#confirmvalid').remove();
+				if(val!=pwdval)
+				{
+					$(this).after(
+						'<div id="confirmvalid" class="error">两次输入密码不一直</div>')
+				}
+		
+			});	
+		});
+	</script>
+{% endblock %}
+{% block body %}
+    <div class = "container">
+      <div class="row">
+        <div class="col-md-9" role = "main">
+        	<h1 class="page-header">Welcome</h1>
+        	<form  action="signup" method = "post">
+                <label for="id_name">名字:</label><br/>
+                <input type="input" id="id_name" name="name" />
+                <br/>
+                <label for="id_email">邮箱：</label><br/>
+                <input id = "id_email" name="email" />
+                <br/>
+                <label for="id_pwd">密码:</label><br/>
+                <input type="password" id="id_pwd" name="pwd" />
+                <br/>
+                <label for="id_confirm">重复密码：</label><br/>
+                <input type="password" id="id_confirm" name="anopwd"/>
+                <br/>
+                <input type="submit" name="form.submitted" value="注册"/>
+                <input type="reset" value="重置" />
+        	</form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

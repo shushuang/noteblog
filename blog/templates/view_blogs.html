@@ -1,0 +1,23 @@
+﻿{% extends "template.html" %}
+{% block body %}
+    <div class = "container">
+      <div class="row">
+        <div class="col-md-9" role = "main">
+          <h1 class="page-header">Blogs</h1>
+          <a href="add_blog">New Blog</a>
+			{% for blog in blogs %}
+				<h3>{{blog.title}}</h3>
+				<a href="edit_blog/{{blog.id}}">edit this blog</a>
+				&nbsp;&nbsp;创建于：{{"%s年%s月%s日 %s时%s分"|format(blog.created_time.year, blog.created_time.month, blog.created_time.day, blog.created_time.hour, blog.created_time.minute)}}
+				{% if blog.last_modified_time is not none %}
+				&nbsp;&nbsp;最后修改于：{{"%s年%s月%s日 %s时%s分"|format(blog.last_modified_time.year, blog.last_modified_time.month, blog.last_modified_time.day, blog.last_modified_time.hour, blog.last_modified_time.minute)}}
+				{% endif %}
+				<br/>
+				<div>
+					{{blog.content}}
+				</div>
+			{% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock %}

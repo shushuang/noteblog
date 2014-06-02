@@ -1,0 +1,22 @@
+.error
+{
+	background-image:url("../error.png");
+	display:inline;
+	color:#CC3333;
+	background-position: left center;
+	background-repeat: no-repeat;
+	font-size: 13px;
+	line-height:16px;
+	padding-left:15px;
+}
+.ok
+{
+	background-image:url("../accept.png");
+	display:inline;
+	color:#339900;
+	background-position: left center;
+	background-repeat: no-repeat;
+	font-size: 13px;
+	line-height:16px;
+	padding-left:15px;
+}

@@ -1,0 +1,73 @@
+{% extends "template.html" %}
+{% block head %}
+	<link href="../static/css/validate.css" rel="stylesheet">
+	<script src="../static/js/validate.js"></script>
+	<script>
+		$(document).ready(function(){	
+			//check whether the username is valid	
+			$('#user_email').blur(function(){
+				val_email = $(this).val();
+				$('#emailvalid').remove();
+				if(!validate_required(val_email))
+				{
+					$(this).after(
+							'<div id="emailvalid" class="error">邮箱不能为空</div>');
+				}
+				else if(!validate_email(val_email))
+				{
+					$(this).after(
+							'<div id="emailvalid" class="error">邮箱格式不正确</div>');
+				}
+				else
+				{
+					$(this).after(
+							'<div id="emailvalid" class="ok">正确</div>');
+				}
+			});
+			$('#user_pwd').blur(function(){
+				val = $(this).val();
+				$('#pwdvalid').remove();
+				if(!validate_required(val))
+				{
+					$(this).after(
+						'<div id="pwdvalid" class="error">密码不能为空</div>')
+				}
+				else if(!validate_alphanum(val))
+				{
+					$(this).after(
+						'<div id="pwdvalid" class="error">密码只能使用字母和数字</div>')
+				}
+				else
+				{
+					
+				}
+			});
+		});
+	</script>
+{% endblock %}
+{% block body %}
+    <div class = "container">
+      <div class="row">
+        <div class="col-md-9" role = "main">
+        	<h1 class="page-header">Welcome</h1>
+        	<form  action="signin" method = "post">
+                {% if wrong is defined %}
+                <div class="error">用户名或者密码不正确</div>
+                <br/>
+                {% else %}
+                <br/>
+                <br/>
+                {% endif %}                
+                <label for="user_email">登录邮箱：</label><br/>
+                <input id = "user_email" name="email" />
+                <br/>
+                <label for="user_email">密码:</label><br/>
+                <input type="password" id="id_pwd" name="pwd" />
+                <br/>
+                <input type="submit" name="form.submitted" value="登录"/>
+                <input type="reset" value="重置" />
+        	</form>
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "template.html" %}
+{% block head %}
+ <script>
+ 	function get_blogclasses()
+ 	{
+ 		$.post("get_blogclasses",
+ 				{ name: 'name'},
+			function(data, status)
+			{
+				alert('hello')
+				$('#add_blogclass_link').before(
+						data.htmlval
+				);			
+			}	
+ 		);
+ 	}
+ 	$(document).ready(function(){
+ 		get_blogclasses();
+ 	});
+ </script>
+{% endblock %}
+{% block body %}
+    <div class = "container">
+      <div class="row">
+        <div class="col-md-9" role = "main">
+        	<h1 class="page-header">New Blog</h1>
+        	<form  action="add_blog" method = "post">
+                <input type="hidden" name="csrf_token" 
+                    value="{{request.session.get_csrf_token()}}"/>
+        		<label for ="blogtitle">Title:</label>
+        		<input type="text"  id="blogtitle" name="title"/><br/>
+        		<label for ="blogcontent">Content:</label><br/>
+        		<textarea id ="blogcontent" name="content" rows="10"
+        		 cols="100"></textarea><br/>
+        		<input type="submit" name="form.submitted" value="save"/>
+        	</form>
+        </div>
+        <div style="float:left" id="blogclasses_container">
+            <ul>
+            <a href="add_blogclass" id="add_blogclass_link">添加分类</a>
+            </ul>
+            
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "template.html" %}
+
+{% block head %}
+    <link href="../static/css/datepicker3.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div class = "container">
+      <div class="row">
+        <div class="col-md-9" role = "main">
+        	<h1 class="page-header">New Blog</h1>
+        	<form  action="{{actionurl}}" method = "post">
+                <input type="hidden" name="csrf_token" 
+                    value="{{request.session.get_csrf_token()}}"/>
+        		<label for ="blogtitle">Title:</label>
+        		<input type="text"  id="blogtitle" name="title" 
+                    value="{{blog. title|default('')}}"/><br/>
+        		<label for ="blogcontent">Content:</label><br/>
+        		<textarea id ="blogcontent" name="content" rows="10"
+        		 cols="100">{{blog.content|default('')}}</textarea><br/>
+        		<input type="submit" name="form.submitted" value="save"/>
+        	</form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block jsappend %}
+    <script src="../static/js/ckeditor.js"></script>
+    <script src="../static/js/adapters/jquery.js"></script>
+    <script src="../static/js/bootstrap-datepicker.js"></script>
+    <script>
+      $('textarea#blogcontent').ckeditor();
+    </script>
+{% endblock %}
